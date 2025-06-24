@@ -1,0 +1,24 @@
+[project]
+name = "cash-register"
+version = "0.1.0"
+description = ""
+authors = [
+    {name = "Cinex10",email = "y.driss@esi-sba.dz"}
+]
+readme = "README.md"
+requires-python = ">=3.13"
+dependencies = [
+    "pytest (>=8.4.1,<9.0.0)",
+    "coverage (>=7.9.1,<8.0.0)"
+]
+packages = [
+    { include = "cmd" }
+]
+
+[build-system]
+requires = ["poetry-core>=2.0.0,<3.0.0"]
+build-backend = "poetry.core.masonry.api"
+
+[tool.poetry.scripts]
+test = "poetry_scripts:test"
+cov = "poetry_scripts:coverage"
