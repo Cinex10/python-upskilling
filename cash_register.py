@@ -1,9 +1,10 @@
 from decimal import Decimal
-
-from exceptions import NegativePriceError
+from data import LineItem, Receipt
+from exceptions import DiscountError, NegativePriceError
 class CashRegister:
     def __init__(self) -> None:
         self.items = {}
+        self.discount = 0
     
     def scan_item(self, sku: str, price: Decimal, qty: int = 1):
         """
@@ -32,9 +33,10 @@ class CashRegister:
         Returns:
             The total price of all items.
         """
-        total = Decimal(0)
+        
+        total = Decimal("0")
         for sku, stock in self.items.items():
-            total += Decimal(sum(price * qty for price, qty in stock.items()))
+            total += sum(Decimal(str(price * qty)) for price, qty in stock.items())
         return total
     
     
@@ -45,3 +47,54 @@ class CashRegister:
             None
         """
         self.items.clear()
+        
+    
+    def apply_discount(self, percent: Decimal):
+        """
+        Apply a discount to the total price.
+        Args:
+            percent: The percentage of the discount.
+        Raises:
+            DiscountError: If the discount is not in 0 - 100 range.
+        Returns:
+            None
+        """
+        if percent < 0 or percent > 100:
+            raise DiscountError()
+        
+        self.discount = percent
+    
+    
+    def get_discount(self) -> Decimal:
+        """
+        Get the discount percentage.
+        Returns:
+            The discount percentage.
+        """
+        if self.discount == 100:
+            return Decimal("0")
+            
+        total = self.total()
+        discount = Decimal(str(self.discount / 100))
+        return total * discount
+    
+    
+    def remove_discount(self):
+        """
+        Remove the discount from the total price.
+        Returns:
+            None
+        """
+        self.discount = 0
+    
+    def to_receipt(self) -> Receipt:
+        """
+        Convert the cash register to a receipt.
+        Returns:
+            A receipt object.
+        """
+        lignes = []
+        for sku, stock in self.items.items():
+            for price, qty in stock.items():
+                lignes.append(LineItem(sku, price, qty))
+        return Receipt(lignes=lignes, total_brut=self.total(), discount_pct=self.discount, total_due=self.total() - self.get_discount())
