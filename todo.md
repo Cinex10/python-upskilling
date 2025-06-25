@@ -1,0 +1,1 @@
+[] - Why committing using GUI raise error while committing using command line works fine
