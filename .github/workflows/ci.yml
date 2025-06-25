@@ -35,7 +35,17 @@ jobs:
       run: |
         poetry run mypy src/
 
-    - name: Run tests and coverage
+    - name: Run tests
       run: |
         poetry run test
-        poetry run cov
+    
+    - name: Check coverage
+      run: |
+        s=$(poetry run cov | grep "^TOTAL")
+        p=$(echo "$s" | awk '{print $NF}' | sed 's/%//')
+        n=$((p))
+        if [ $n -lt 80 ]; then
+            exit 1
+        else
+            exit 0
+        fi
