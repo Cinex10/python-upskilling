@@ -9,4 +9,7 @@ ignore-paths=
     dist,
     venv,
     pyproject.toml,
-    README.md
+    README.md,
+    .github,
+    .mypy_cache,
+    todo.md
