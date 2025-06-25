@@ -14,10 +14,10 @@ class CashRegister:
     """
 
     def __init__(self) -> None:
-        self.items = {}
-        self.discount = 0
+        self.items: dict[str, dict[Decimal, int]] = {}
+        self.discount: Decimal = Decimal(0)
 
-    def scan_item(self, sku: str, price: Decimal, qty: int = 1):
+    def scan_item(self, sku: str, price: Decimal, qty: int = 1) -> None:
         """
         Scan an item and add it to the cash register.
         Args:
@@ -64,7 +64,7 @@ class CashRegister:
         """
         self.items.clear()
 
-    def apply_discount(self, percent: Decimal):
+    def apply_discount(self, percent: Decimal) -> None:
         """
         Apply a discount to the total price.
         Args:
@@ -92,13 +92,13 @@ class CashRegister:
         discount = Decimal(str(self.discount / 100))
         return total * discount
 
-    def remove_discount(self):
+    def remove_discount(self) -> None:
         """
         Remove the discount from the total price.
         Returns:
             None
         """
-        self.discount = 0
+        self.discount = Decimal(0)
 
     def to_receipt(self) -> Receipt:
         """
@@ -106,7 +106,7 @@ class CashRegister:
         Returns:
             A receipt object.
         """
-        lignes = []
+        lignes: list[LineItem] = []
         for sku, stock in self.items.items():
             for price, qty in stock.items():
                 lignes.append(LineItem(sku, price, qty))
