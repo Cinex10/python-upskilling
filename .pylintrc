@@ -14,3 +14,4 @@ ignore-paths=
     .mypy_cache,
     todo.md,
     poetry.lock,
+    mypy.ini,
