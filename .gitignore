@@ -4,3 +4,4 @@ __pycache__
 .cursor
 .coverage
 venv
+.mypy_cache
