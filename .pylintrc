@@ -12,4 +12,5 @@ ignore-paths=
     README.md,
     .github,
     .mypy_cache,
-    todo.md
+    todo.md,
+    poetry.lock,
