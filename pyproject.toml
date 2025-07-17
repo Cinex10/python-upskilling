@@ -42,3 +42,6 @@ exclude = '''
   | dist
 )/
 '''
+
+[tool.mypy]
+disallow_untyped_defs = true
