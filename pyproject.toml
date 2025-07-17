@@ -25,7 +25,6 @@ black = "^25.1.0"
 isort = "^6.0.1"
 pytest = "^8.4.1"
 coverage = "^7.9.1"
-flake8 = "^7.3.0"
 pylint = "^3.3.7"
 pre-commit = "^4.2.0"
 mypy = "^1.16.1"
@@ -45,3 +44,9 @@ exclude = '''
 
 [tool.mypy]
 disallow_untyped_defs = true
+
+[tool.pylint.format]
+max-line-length = 79
+
+[tool.pylint.main]
+ignore-paths = [".git|.git", "__pycache__|__pycache__", "docs\\\\source\\\\conf.py|docs/source/conf.py", "old|old", "build|build", "dist|dist", "venv|venv", "pyproject.toml|pyproject.toml", "README.md|README.md", ".github|.github", ".mypy_cache|.mypy_cache", "todo.md|todo.md", "poetry.lock|poetry.lock", "mypy.ini|mypy.ini"]
